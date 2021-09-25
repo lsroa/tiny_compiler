@@ -5,18 +5,14 @@ import (
 )
 
 type Token struct {
-	t_type string
-	value  string
+	Type  string
+	Value string
 }
 
 func Tokenizer(input string) []Token {
 	len := len(input)
 	tokens := []Token{}
 	parens := [...]string{"[", "]", "(", ")"}
-	// closeOpen := map[string]string{
-	// 	"[": "]",
-	// 	"(": ")",
-	// }
 	i := 0
 
 	for i < len {
@@ -25,6 +21,7 @@ func Tokenizer(input string) []Token {
 			i += 1
 			continue
 		}
+
 		if utils.IsLetter(char) {
 			letters := ""
 			for utils.IsLetter(char) {
@@ -32,9 +29,10 @@ func Tokenizer(input string) []Token {
 				i += 1
 				char = string(input[i])
 			}
-			tokens = append(tokens, Token{value: letters, t_type: "string"})
+			tokens = append(tokens, Token{Value: letters, Type: "string"})
 			continue
 		}
+
 		if utils.IsNumber(char) {
 			numbers := ""
 			for utils.IsNumber(char) {
@@ -42,12 +40,13 @@ func Tokenizer(input string) []Token {
 				i += 1
 				char = string(input[i])
 			}
-			tokens = append(tokens, Token{value: numbers, t_type: "number"})
+			tokens = append(tokens, Token{Value: numbers, Type: "number"})
 			continue
 		}
+
 		for _, paren := range parens {
 			if char == paren {
-				tokens = append(tokens, Token{value: char, t_type: "paren"})
+				tokens = append(tokens, Token{Value: char, Type: "paren"})
 			}
 		}
 		i += 1
